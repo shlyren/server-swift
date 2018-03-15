@@ -8,7 +8,7 @@
 import Foundation
 
 
-/// 保存未读消息
+/// 保存未读消息 的数据库
 class ChatSQL: ChatManager {
     
     

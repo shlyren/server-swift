@@ -8,7 +8,7 @@
 import Foundation
 import PerfectHTTP
 
-/// 评论
+/// 评论 数据
 class DiscoverCommentManager: DiscoverManager {
     
     override init() {

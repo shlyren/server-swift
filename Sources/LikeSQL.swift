@@ -8,7 +8,7 @@
 import Foundation
 import PerfectHTTP
 
-/// DiscoverTopicLikeManager
+/// 赞 
 class DiscoverTopicLikeManager : DiscoverManager {
     override init() {
         super.init()
