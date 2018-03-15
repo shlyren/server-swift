@@ -25,6 +25,8 @@ xcuserdata
 
 Package.resolved
 
+.DS_Store
+
 ## Obj-C/Swift specific
 *.hmap
 *.ipa
