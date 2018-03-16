@@ -17,8 +17,7 @@ class DiscoverCommentManager: DiscoverManager {
         
         let sql = "CREATE TABLE IF NOT EXISTS t_topic_comment (id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, topicId TEXT, text TEXT, fromId TEXT, fromName TEXT, toId TEXT, toName TEXT, type INT, time TEXT)"
         
-        let success = mySql.query(statement: sql)
-        if success {
+        if mySql.query(statement: sql) {
             CTLog("创建成功")
         }else{
             CTLog("创建失败: " + mySql.errorMessage())
@@ -28,7 +27,7 @@ class DiscoverCommentManager: DiscoverManager {
     }
     
     /// 插入评论
-    func insertComment(request:HTTPRequest) -> (success:Bool, msg:String?) {
+    func insertComment(request: HTTPRequest) -> (success: Bool, msg: String?) {
         
         let topicId = request.param("topicId")
         if topicId.isNull() {
@@ -58,7 +57,7 @@ class DiscoverCommentManager: DiscoverManager {
             return (false, "操作失败")
         }
         //topicId TEXT, text TEXT, fromId TEXT, fromName TEXT, toId TEXT, toName TEXT, type INT, time TEXT
-        let sql = "INSERT INTO t_topic_comment (topicId,text,fromId,fromName,toId,toName,type,time) VALUES (\(topicId), '\(text)', '\(fromId)', '\(fromName)', '\(toId)', '\(toName)', '\(type)', '\(time)')"
+        let sql = "INSERT INTO t_topic_comment (topicId, text, fromId, fromName, toId, toName, type, time) VALUES (\(topicId), '\(text)', '\(fromId)', '\(fromName)', '\(toId)', '\(toName)', '\(type)', '\(time)')"
         
         let success = mySql.query(statement: sql)
 
@@ -110,21 +109,16 @@ class DiscoverCommentManager: DiscoverManager {
         
         var result = [[String: Any]]()
         results.forEachRow { (element) in
-            
-            let dict = self.getCommentDict(element: element)
-            
-            result.append(dict)
+            result.append(self.getCommentDict(element: element))
         }
         
         closeConnect()
         return result
     }
     
-    func getCommentDetail(commendId:String) -> [String:Any]? {
+    func getCommentDetail(commendId: String) -> [String: Any]? {
         
-        if commendId.isNull() {
-            return nil
-        }
+        if commendId.isNull() { return nil }
         guard connect() else { return nil }
         
         let sql = "select * from t_topic_comment where id = \(commendId)"
@@ -138,11 +132,9 @@ class DiscoverCommentManager: DiscoverManager {
         }
         
         let element = results.next()
-
         closeConnect()
-        if element == nil {
-            return nil
-        }
+        
+        if element == nil { return nil }
         return getCommentDict(element: element!)
         
     }
@@ -168,8 +160,8 @@ class DiscoverCommentManager: DiscoverManager {
 }
 
 private extension DiscoverCommentManager {
-    func getCommentDict(element: [String?]) -> [String:Any] {
-        var dict = [String:Any]()
+    func getCommentDict(element: [String?]) -> [String: Any] {
+        var dict = [String: Any]()
         
         let commentId = element[0] ?? ""
         let topicId = element[1] ?? ""
@@ -235,7 +227,7 @@ class DiscoverCommentReplyManager: DiscoverManager {
         var result = [[String: Any]]()
         
         results.forEachRow { (elemt) in
-            var dict = [String:Any]()
+            var dict = [String: Any]()
             //id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, topicId TEXT,commnetId TEXT, text TEXT, fromId TEXT, fromName TEXT, toId TEXT, toName TEXT, time TEXT
             
             dict.updateValue(elemt[0] ?? "", forKey: "id")
@@ -243,14 +235,13 @@ class DiscoverCommentReplyManager: DiscoverManager {
             dict.updateValue(elemt[2] ?? "", forKey: "commentId")
             dict.updateValue(elemt[3] ?? "", forKey: "text")
             
-            var from = [String : Any]()
+            var from = [String: Any]()
             from.updateValue(elemt[4] ?? "", forKey: "id")
             from.updateValue(elemt[5] ?? "", forKey: "name")
             dict.updateValue(from, forKey: "from")
             
-            
             if let toId = elemt[6], let toName = elemt[7] {
-                var to = [String : String]()
+                var to = [String: String]()
                 to.updateValue(toId, forKey: "id")
                 to.updateValue(toName, forKey: "name")
                 dict.updateValue(to, forKey: "to")
@@ -271,9 +262,7 @@ class DiscoverCommentReplyManager: DiscoverManager {
     
     func getReplyCount(topicId:String, commentId:String) -> Int {
         
-        if topicId.isNull() || commentId.isNull() {
-            return 0
-        }
+        if topicId.isNull() || commentId.isNull() { return 0 }
         
         let sql = "select * from t_topic_comment_reply where topicId = \(topicId) and commentId = \(commentId)"
         

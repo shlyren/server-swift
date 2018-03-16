@@ -9,7 +9,7 @@ import Foundation
 import PerfectHTTP
 
 /// 赞 
-class DiscoverTopicLikeManager : DiscoverManager {
+class DiscoverTopicLikeManager: DiscoverManager {
     override init() {
         super.init()
         guard connect() else { return }
@@ -28,7 +28,7 @@ class DiscoverTopicLikeManager : DiscoverManager {
     
     
     /// 获取赞
-    func getTopicLike(topicId:String?) -> [[String:Any]] {
+    func getTopicLike(topicId:String?) -> [[String: Any]] {
         
         if topicId == nil || topicId!.isNull() || !connect() {
             return []
@@ -104,7 +104,7 @@ class DiscoverTopicLikeManager : DiscoverManager {
             }
         }else {
             let time = String.time()
-            let sql = "INSERT INTO t_topic_like (topicId,userId,userName,time) VALUES (\(topicId), \(userId), '\(userName)', '\(time)')"
+            let sql = "INSERT INTO t_topic_like (topicId, userId, userName, time) VALUES (\(topicId), \(userId), '\(userName)', '\(time)')"
             if mySql.query(statement: sql) {
                 CTLog("INSERT success")
                 closeConnect()
@@ -115,7 +115,6 @@ class DiscoverTopicLikeManager : DiscoverManager {
                 return (1, ["like":true], "操作成功")
             }
         }
-        
         
         closeConnect()
         return (-1, NSNull(), "操作失败")

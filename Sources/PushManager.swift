@@ -22,7 +22,7 @@ struct PushMode {
 
 struct PushManager {
     
-    private let confName = "My configuration name - can be whatever"
+    fileprivate let confName = "My configuration name - can be whatever"
     
     init() {
         

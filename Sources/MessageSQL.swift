@@ -9,6 +9,7 @@ import Foundation
 import PerfectHTTP
 import PerfectMySQL
 
+// 消息中心
 class DiscoverMessageManager : DiscoverManager {
     override init() {
         super.init()
@@ -16,8 +17,8 @@ class DiscoverMessageManager : DiscoverManager {
         
         let sql = "CREATE TABLE IF NOT EXISTS t_topic_message (id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, userId TEXT, topicId TEXT, commentId TEXT, message TEXT, content TEXT, fromId TEXT, fromName TEXT, type INT, isRead INT, time TEXT)"
         
-        let success = mySql.query(statement: sql)
-        if success {
+        
+        if mySql.query(statement: sql) {
             CTLog("创建成功")
         }else{
             CTLog("创建失败: " + mySql.errorMessage())
@@ -57,7 +58,7 @@ class DiscoverMessageManager : DiscoverManager {
         
     }
     
-    func getMessage(request : HTTPRequest) -> ([[String:Any]]) {
+    func getMessage(request : HTTPRequest) -> ([[String: Any]]) {
         
         let messageId = request.param("messageId")
         let size = request.param(name: "size", defaultValue: "10")!

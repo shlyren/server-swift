@@ -39,7 +39,7 @@ class SocketManager {
 class EchoHandler: WebSocketSessionHandler {
     
     let socketProtocol: String? = "chat"
-    var sockets = [String: WebSocket]()
+    var sockets = [String: WebSocket]() //保存所有的连接者
     
     func handleSession(request: HTTPRequest, socket: WebSocket) {
         
@@ -68,14 +68,14 @@ class EchoHandler: WebSocketSessionHandler {
 
 private extension EchoHandler {
     
-     func setupData(request: HTTPRequest, socket: WebSocket, string:String) {
+     func setupData(request: HTTPRequest, socket: WebSocket, string: String) {
         
         let userId = request.param("userId")
         
         guard let url = URL.init(string: string) else {
             CTLog("socket count:\(self.sockets.count)")
 
-            guard let decoded = try? string.jsonDecode() as! [String:Any] else {
+            guard let decoded = try? string.jsonDecode() as! [String: Any] else {
                 handleSession(request: request, socket: socket)
                 return
             }

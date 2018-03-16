@@ -25,7 +25,7 @@ let package = Package(
 	dependencies: [
         .Package(url: "https://github.com/PerfectlySoft/Perfect-HTTPServer.git", majorVersion: 2), // http 服务
         .Package(url: "https://github.com/PerfectlySoft/Perfect-MySQL.git", majorVersion: 3), // 数据库
-        .Package(url:"https://github.com/PerfectlySoft/Perfect-Notifications.git", // iOS推送 majorVersion: 2, minor: 0),
+        .Package(url:"https://github.com/PerfectlySoft/Perfect-Notifications.git",  majorVersion: 2, minor: 0), // iOS推送
         .Package(url:"https://github.com/PerfectlySoft/Perfect-WebSockets.git", majorVersion: 2), // 及时通讯
     ]
 )

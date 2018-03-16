@@ -46,7 +46,7 @@ class DiscoverPostManager : DiscoverManager {
         let pics = request.param("pics")
         let smallPics = request.param("smallPics")
         
-        let sql = "INSERT INTO t_topic_post (userId,userName,text,locAddress,locLat,locName,loclng,pics,smallPics,time) VALUES (\(userId), '\(userName)', '\(text)', '\(locAddress)', '\(locLat)', '\(locName)', '\(loclng)', '\(pics)','\(smallPics)', '\(time)')"
+        let sql = "INSERT INTO t_topic_post (userId, userName, text, locAddress, locLat, locName, loclng, pics, smallPics, time) VALUES (\(userId), '\(userName)', '\(text)', '\(locAddress)', '\(locLat)', '\(locName)', '\(loclng)', '\(pics)','\(smallPics)', '\(time)')"
         
         let success = mySql.query(statement: sql)
         if success == false {
@@ -78,7 +78,7 @@ class DiscoverPostManager : DiscoverManager {
     }
     
     /// 获取
-    func getTopic(request:HTTPRequest) -> [[String: Any]] {
+    func getTopic(request: HTTPRequest) -> [[String: Any]] {
         
         guard connect() else { return [] }
         
@@ -97,7 +97,7 @@ class DiscoverPostManager : DiscoverManager {
             return []
         }
         
-        var arr = [[String:Any]]()
+        var arr = [[String: Any]]()
         mySql.storeResults()?.forEachRow(callback: { (row) in
             arr.append(getTopicDict(element: row))
         })
@@ -107,7 +107,7 @@ class DiscoverPostManager : DiscoverManager {
         return arr
     }
     
-    func getTopicDetail(topicId : String) -> [String:Any]? {
+    func getTopicDetail(topicId : String) -> [String: Any]? {
         if topicId.isNull() == true { return nil }
         guard connect() else { return nil }
         
@@ -131,7 +131,7 @@ class DiscoverPostManager : DiscoverManager {
     
     
     // 获取topic 内容文字
-    func getConetent(topicId:String) -> String {
+    func getConetent(topicId: String) -> String {
         guard let dict = getTopicDetail(topicId: topicId) else {
             return ""
         }
@@ -139,7 +139,7 @@ class DiscoverPostManager : DiscoverManager {
     }
     
     /// 删除
-    func deleteDiscover(request:HTTPRequest) -> (Bool,String) {
+    func deleteDiscover(request:HTTPRequest) -> (Bool, String) {
 
         let topicId = request.param("topicId")
         let userId = request.param("userId")
@@ -162,8 +162,8 @@ class DiscoverPostManager : DiscoverManager {
 
 private extension DiscoverPostManager {
     // 格式化topic
-    func getTopicDict(element: [String?]) -> [String:Any] {
-        var dict = [String:Any]()
+    func getTopicDict(element: [String?]) -> [String: Any] {
+        var dict = [String: Any]()
         let topicId = element[0]
         //topicId,userId,userName,text,locAddress,locLat,locName,loclng,pics,time
         dict.updateValue(topicId as Any, forKey: "topicId")
@@ -171,7 +171,7 @@ private extension DiscoverPostManager {
         dict.updateValue(element[10] as Any, forKey: "time")
         
         /// 用户信息
-        var user = [String:Any]()
+        var user = [String: Any]()
         user.updateValue(element[1] as Any, forKey: "id")
         user.updateValue(element[2] as Any, forKey: "name")
         dict.updateValue(user, forKey: "user")
@@ -180,7 +180,7 @@ private extension DiscoverPostManager {
         let lat = Double(element[5]!)
         let lng = Double(element[7]!)
         if lat != nil && lng != nil && lat! > 0.0 && lng! > 0.0 {
-            var loc = [String:Any]()
+            var loc = [String: Any]()
             loc.updateValue(element[4] ?? "", forKey: "locAddress")
             loc.updateValue(lat!, forKey: "locLat")
             loc.updateValue(element[6] ?? "", forKey: "locName")
@@ -205,7 +205,7 @@ private extension DiscoverPostManager {
         }
         dict.updateValue(picArr, forKey: "pics")
         
-        /// 喜欢
+        /// 👍
         let likes = likeSQLManager.getTopicLike(topicId: topicId)
         dict.updateValue(likes, forKey: "likes")
         dict.updateValue(likes.count, forKey: "likesCount")
