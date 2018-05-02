@@ -197,7 +197,7 @@ private extension DiscoverPostManager {
         for index in 0...pics.count-1 {
             let pic = pics[index]
             if pic.length > 0 {
-                var picDict = [String:String]()
+                var picDict = [String: String]()
                 picDict.updateValue(pic, forKey: "image")
                 picDict.updateValue(smallPic[index], forKey: "smallImage")
                 picArr.append(picDict)
