@@ -194,7 +194,7 @@ private extension DiscoverPostManager {
         let pics = (element[8] ?? "").components(separatedBy: ",")
         let smallPic = (element[9] ?? "").components(separatedBy: ",")
         var picArr = [[String: String]]()
-        for index in 0...pics.count-1 {
+        for index in 0...pics.count - 1 {
             let pic = pics[index]
             if pic.length > 0 {
                 var picDict = [String: String]()
