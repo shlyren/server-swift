@@ -85,7 +85,7 @@ class DiscoverPostManager : DiscoverManager {
         let topicId = request.param("topicId")
         let size = request.param(name: "size", defaultValue: "10")!
         
-        var sql : String
+        var sql: String
         if topicId.toInt() > 0 {
             sql = "select * from t_topic_post where topicId < \(topicId) order by time desc limit \(size)"
         } else{
@@ -107,7 +107,7 @@ class DiscoverPostManager : DiscoverManager {
         return arr
     }
     
-    func getTopicDetail(topicId : String) -> [String: Any]? {
+    func getTopicDetail(topicId: String) -> [String: Any]? {
         if topicId.isNull() == true { return nil }
         guard connect() else { return nil }
         
@@ -177,8 +177,8 @@ private extension DiscoverPostManager {
         dict.updateValue(user, forKey: "user")
         
         /// 位置信息
-        let lat = Double(element[5]!)
-        let lng = Double(element[7]!)
+        let lat = Double(element[5] ?? "")
+        let lng = Double(element[7] ?? "")
         if lat != nil && lng != nil && lat! > 0.0 && lng! > 0.0 {
             var loc = [String: Any]()
             loc.updateValue(element[4] ?? "", forKey: "locAddress")
@@ -191,9 +191,9 @@ private extension DiscoverPostManager {
         }
         
         /// 图片信息
-        let pics = element[8]!.components(separatedBy: ",")
-        let smallPic = element[9]!.components(separatedBy: ",")
-        var picArr = [[String:String]]()
+        let pics = (element[8] ?? "").components(separatedBy: ",")
+        let smallPic = (element[9] ?? "").components(separatedBy: ",")
+        var picArr = [[String: String]]()
         for index in 0...pics.count-1 {
             let pic = pics[index]
             if pic.length > 0 {

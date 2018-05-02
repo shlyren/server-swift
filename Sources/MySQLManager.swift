@@ -13,7 +13,7 @@ import PerfectMySQL
 
 class MySQLManager {
     
-    fileprivate let host = "0.0.0.0"
+    fileprivate let host = "106.14.9.43"
     fileprivate let user = "root"
     fileprivate let pwd = "123456"
     

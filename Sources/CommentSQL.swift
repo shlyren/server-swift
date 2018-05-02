@@ -169,7 +169,7 @@ private extension DiscoverCommentManager {
         dict.updateValue(topicId as Any, forKey: "topicId")
         dict.updateValue(element[2] as Any, forKey: "text")
         
-        var from = [String:Any]()
+        var from = [String: Any]()
         from.updateValue(element[3] as Any, forKey: "id")
         from.updateValue(element[4] as Any, forKey: "name")
         dict.updateValue(from, forKey: "from")
