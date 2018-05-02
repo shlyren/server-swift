@@ -29,7 +29,7 @@
 	swift package generate-xcodeproj
 ```
 
-3. 打开项目,使用Mac编译, 会有一个sql头文件的报错(**Header '/usr/local/include/mysql/mysql.h' not found**) , 找到mysql的头文件: 我用brew安装的在 **/usr/local/Cellar/mysql/5.7.21/include/mysql/mysql.h** ,  用安装包安装的sql位置有点区别,但依然在 **/usr/local** 目录下
+3. 打开项目,使用Mac编译, 会有一个sql头文件的报错(**Header '/usr/local/include/mysql/mysql.h'** not found) , 找到mysql的头文件: 我用brew安装的在 **/usr/local/Cellar/mysql/5.7.21/include/mysql/mysql.h** ,  用安装包安装的sql位置有点区别,但依然在 **/usr/local** 目录下
 	
 ### on ubuntu
 * 需要安装 swift (我的版本为3.1.1(推荐)), 安装教程: https://swift.org/getting-started/#installing-swift
