@@ -64,8 +64,8 @@ struct PushManager {
         CTLog("token: " + model.token)
         var ary = [IOSNotificationItem]()
         ary.append(IOSNotificationItem.alertTitle(model.title ?? "您有一条消息"))
-        if model.message != nil {
-            ary.append(IOSNotificationItem.alertBody(model.message!))
+        if let message = model.message {
+            ary.append(IOSNotificationItem.alertBody(message))
         }
         ary.append(IOSNotificationItem.sound(model.sound ?? "default"))
         ary.append(IOSNotificationItem.badge(model.badge ?? 1))

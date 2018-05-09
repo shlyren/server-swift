@@ -46,7 +46,7 @@ class DiscoverPostManager : DiscoverManager {
         let pics = request.param("pics")
         let smallPics = request.param("smallPics")
         
-        let sql = "INSERT INTO t_topic_post (userId, userName, text, locAddress, locLat, locName, loclng, pics, smallPics, time) VALUES (\(userId), '\(userName)', '\(text)', '\(locAddress)', '\(locLat)', '\(locName)', '\(loclng)', '\(pics)','\(smallPics)', '\(time)')"
+        let sql = "insert into t_topic_post (userId, userName, text, locAddress, locLat, locName, loclng, pics, smallPics, time) VALUES (\(userId), '\(userName)', '\(text)', '\(locAddress)', '\(locLat)', '\(locName)', '\(loclng)', '\(pics)','\(smallPics)', '\(time)')"
         
         let success = mySql.query(statement: sql)
         if success == false {

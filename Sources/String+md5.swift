@@ -28,6 +28,13 @@ public struct StringProxy {
     }
 }
 
+//extension String: KingfisherCompatible {
+//    public typealias CompatibleType = StringProxy
+//    public var kf: CompatibleType {
+//        return StringProxy(proxy: self)
+//    }
+//}
+
 extension StringProxy {
     var md5: String {
         if let data = base.data(using: .utf8, allowLossyConversion: true) {

@@ -104,7 +104,7 @@ class DiscoverTopicLikeManager: DiscoverManager {
             }
         }else {
             let time = String.time()
-            let sql = "INSERT INTO t_topic_like (topicId, userId, userName, time) VALUES (\(topicId), \(userId), '\(userName)', '\(time)')"
+            let sql = "insert into t_topic_like (topicId, userId, userName, time) VALUES (\(topicId), \(userId), '\(userName)', '\(time)')"
             if mySql.query(statement: sql) {
                 CTLog("INSERT success")
                 closeConnect()

@@ -15,7 +15,7 @@ class DiscoverMessageManager : DiscoverManager {
         super.init()
         guard connect() else { return }
         
-        let sql = "CREATE TABLE IF NOT EXISTS t_topic_message (id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, userId TEXT, topicId TEXT, commentId TEXT, message TEXT, content TEXT, fromId TEXT, fromName TEXT, type INT, isRead INT, time TEXT)"
+        let sql = "create table if not exists t_topic_message (id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, userId TEXT, topicId TEXT, commentId TEXT, message TEXT, content TEXT, fromId TEXT, fromName TEXT, type INT, isRead INT, time TEXT)"
         
         
         if mySql.query(statement: sql) {
@@ -41,7 +41,7 @@ class DiscoverMessageManager : DiscoverManager {
             return
         }
         //userId TEXT, topicId TEXT, commentId TEXT, message TEXT, content TEXT fromId TEXT, fromName, TEXT, type INT, time TEXT
-        let sql = "INSERT INTO t_topic_message (userId, topicId, commentId, message, content, fromId, fromName, type, isRead, time) VALUES (\(userId), '\(topicId)', '\(commentId)', '\(message)', '\(content)', '\(fromId)', '\(fromName)', '\(type)', '\(0)', '\(time)')"
+        let sql = "insert into t_topic_message (userId, topicId, commentId, message, content, fromId, fromName, type, isRead, time) values (\(userId), '\(topicId)', '\(commentId)', '\(message)', '\(content)', '\(fromId)', '\(fromName)', '\(type)', '\(0)', '\(time)')"
         
         if mySql.query(statement: sql) {
 
