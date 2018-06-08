@@ -75,8 +75,8 @@ private extension NetworkServerManager {
         routes.add(method: .get, uri: "/web/**") { request, response in
             
             #if os(Linux)
-//                let rootPath = "/root/swift/server-swift/web";
-            let rootPath = "/var/www/shlyren.com";
+                let rootPath = "/root/swift/server-swift/web";
+//            let rootPath = "/var/www/shlyren.com";
             #else
                 let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
             #endif
