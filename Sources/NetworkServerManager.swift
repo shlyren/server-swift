@@ -71,24 +71,18 @@ private extension NetworkServerManager {
             response.setBody(string: body)
             response.completed()
         }
-        
        
         routes.add(method: .get, uri: "/web/**") { request, response in
             
-            // get the portion of the request path which was matched by the wildcard
-            let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/404.html";
-            request.path = path;
-            // Initialize the StaticFileHandler with a documentRoot
-            // /var/www/shlyren.com
-            
             #if os(Linux)
-                let rootPath = "/root/swift/server-swift/web";
+//                let rootPath = "/root/swift/server-swift/web";
+            let rootPath = "/var/www/shlyren.com";
             #else
                 let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
             #endif
+            // 设置根目录
             let handler = StaticFileHandler(documentRoot: rootPath)
-            // trigger the handling of the request,
-            // with our documentRoot and modified path set
+            
             handler.handleRequest(request: request, response: response)
         }
 
