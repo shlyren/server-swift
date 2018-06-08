@@ -55,7 +55,6 @@ class NetworkServerManager {
             CTLog("网络未知错误")
         }
         
-//        HTTPServer.launch(.server(name: "localhost", port: 8080, documentRoot: "/path/to/webroot"))
     }
     
 }
@@ -74,17 +73,18 @@ private extension NetworkServerManager {
         }
        
         // 添加静态web监听
-        routes.add(method: .get, uri: "/web/**") { request, response in
-            
+        routes.add(uri: "/web/**") { request, response in
+            let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/"
+            request.path = path;
+
+            // 设置根目录
             #if os(Linux)
                 let rootPath = "/root/swift/server-swift/web";
-//            let rootPath = "/var/www/shlyren.com";
             #else
                 let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
             #endif
-            // 设置根目录
-            let handler = StaticFileHandler(documentRoot: rootPath)
             
+            let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
             handler.handleRequest(request: request, response: response)
         }
 

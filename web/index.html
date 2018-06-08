@@ -11,11 +11,13 @@
 </head>
 <body style="text-align: center; padding: 30px 0;">
     <h1>看到此页表示静态web部署成功</h3>
-    <h4 style="margin-top: 50px;">Powered by swift.</h4>
-    <input id="requestURL" value="/discover/getTopic" style="width: 200px;"> <button onclick="request();" style="margin-top: 50px; margin-left: 10px"> Request test </button>
+    <input id="requestURL" value="/discover/getTopic" style="width: 200px;">
+    <button onclick="request();" style="margin-top: 50px; margin-left: 10px"> Request test </button>
 
     <br/>
     <textarea id="myDiv" style="margin-top: 10px; width: 80%; height: 200px;"></textarea>
+
+    <h4 style="margin-top: 50px;">Powered by swift.</h4>
     <script>
         function request() {
             var xmlhttp;
@@ -31,10 +33,7 @@
             }
             xmlhttp.onreadystatechange=function()
             {
-                if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                {
-                    document.getElementById("myDiv").innerText=xmlhttp.responseText;
-                }
+                document.getElementById("myDiv").innerText=xmlhttp.responseText;
             }
             xmlhttp.open("GET",document.getElementById("requestURL").value,true);
             xmlhttp.send();
