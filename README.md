@@ -4,6 +4,7 @@
 2. 社交系统, 包括发布动态, 评论,点赞, 回复评论等等,以及数据的保存,
 3. iOS设备的推送服务
 4. 支持ssl: https://shlyren.com:8080/discover/getTopic
+5. 支持静态web访问: https://shlyren.com:8080/web
 
 
 ## 支持平台

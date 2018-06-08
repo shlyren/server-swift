@@ -65,6 +65,7 @@ private extension NetworkServerManager {
     //MARK: 注册路由
     func makeHttpRoutes() -> Routes {
         var routes = Routes.init()           //创建路由器
+        //添加http请求监听
         routes.add(uris: ["/discover/**"]) { (request, response) in
             response.setHeader( .contentType, value: "application/json") //响应头
             let body = self.getBodyString(request: request)
@@ -72,6 +73,7 @@ private extension NetworkServerManager {
             response.completed()
         }
        
+        // 添加静态web监听
         routes.add(method: .get, uri: "/web/**") { request, response in
             
             #if os(Linux)
