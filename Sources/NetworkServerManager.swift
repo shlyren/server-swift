@@ -53,7 +53,9 @@ class NetworkServerManager {
             CTLog("网络出现错误：\(err) \(msg)")
         } catch {
             CTLog("网络未知错误")
-        }   
+        }
+        
+//        HTTPServer.launch(.server(name: "localhost", port: 8080, documentRoot: "/path/to/webroot"))
     }
     
 }
@@ -63,12 +65,33 @@ private extension NetworkServerManager {
     //MARK: 注册路由
     func makeHttpRoutes() -> Routes {
         var routes = Routes.init()           //创建路由器
-        routes.add(uris: ["/discover/*"]) { (request, response) in
+        routes.add(uris: ["/discover/**"]) { (request, response) in
             response.setHeader( .contentType, value: "application/json") //响应头
             let body = self.getBodyString(request: request)
             response.setBody(string: body)
             response.completed()
         }
+        
+       
+        routes.add(method: .get, uri: "/web/**") { request, response in
+            
+            // get the portion of the request path which was matched by the wildcard
+            let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/404.html";
+            request.path = path;
+            // Initialize the StaticFileHandler with a documentRoot
+            // /var/www/shlyren.com
+            
+            #if os(Linux)
+                let rootPath = "/root/swift/server-swift/web";
+            #else
+                let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
+            #endif
+            let handler = StaticFileHandler(documentRoot: rootPath)
+            // trigger the handling of the request,
+            // with our documentRoot and modified path set
+            handler.handleRequest(request: request, response: response)
+        }
+
         return routes
     }
     

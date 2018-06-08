@@ -1,0 +1,366 @@
+<!doctype html>
+<html class="no-js" lang="zh_cn">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <!-- Page Title Here -->
+    <title></title>
+
+    <!-- Page Description Here -->
+    <meta name="description" content="A responsive coming soon template, un template HTML pour une page en cours de construction">
+
+    <!-- Disable screen scaling-->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
+
+    <!-- Initializer -->
+    <link rel="stylesheet" href="css/normalize.css">
+
+    <!-- Web fonts and Web Icons -->
+    <link rel="stylesheet" href="css/pageloader.css">
+    <link rel="stylesheet" href="fonts/opensans/stylesheet.css">
+    <link rel="stylesheet" href="fonts/asap/stylesheet.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <!-- Vendor CSS style -->
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="js/vendor/jquery.fullPage.css">
+    <link rel="stylesheet" href="js/vegas/vegas.min.css">
+
+    <!-- Main CSS files -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main_responsive.css">
+    <link rel="stylesheet" href="css/style-color1.css">
+    <script src="js/vendor/modernizr-2.7.1.min.js"></script>
+    <style>
+        #jp_container_1 { position: fixed; top: 5%; left: 2% }
+        #jp_container_1 a { font-size: 26px; color: #ffffff }
+        #jp_container_1 a:hover { color: #f4645f }
+    </style>
+</head>
+<body id="menu" class="alt-bg">
+<!--[if lt IE 8]>
+	<p class="browsehappy">本页面适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+<![endif]--> 
+
+<!-- Page Loader -->
+<div class="page-loader" id="page-loader">
+    <div>
+        <i class="ion ion-loading-d"></i>
+        <p>美丽值得期待...</p>
+    </div>
+</div>
+
+<!-- BEGIN OF site cover -->
+<div class="page-cover" id="s-cover"> 
+    <!-- Cover Background -->
+    <div class="cover-bg pos-abs full-size bg-img" data-image-src="img/bg-slide3.jpg"></div>
+    <!-- BEGIN OF Slideshow Background -->
+    <div class="cover-bg pos-abs full-size slide-show">
+        <i class='img' data-src='img/bg-slide3.jpg'></i>
+        <i class='img' data-src='img/bg-slide2.jpg'></i>
+        <i class='img' data-src='img/bg-slide1.jpg'></i>
+    </div>
+    <!-- END OF Slideshow Background -->
+    <div class="cover-bg-mask pos-abs full-size bg-color" data-bgcolor="rgba(0, 0, 0, 0.41)"></div>
+</div>
+<!--END OF site Cover --> 
+
+<!-- Begin of timer pane -->
+<div class="pane-when " id="s-when">
+    <div class="content">
+    <!-- Clock -->
+        <div class="clock clock-countdown">
+            <div class="site-config"
+                 data-date="1/15/2018 14:00:00"
+                 data-date-timezone="+8">
+            </div>
+            <div class="elem-center">
+                <div class="digit">
+                    <span class="days">81</span>
+                    <span class="txt">天</span>
+                </div>
+
+            </div>
+            <div class="elem-bottom">
+                <div class="deco"></div>
+                <span class="hours">18</span>
+                <span class="thin">小时</span>
+                <span class="minutes">45</span>
+                <span class="thin">分钟</span>
+                <span class="seconds">36</span>
+                <span class="thin">秒</span>
+            </div>
+
+        </div>
+        <footer>
+            <p>2018年 <strong>1月15日</strong></p>
+        </footer>
+    </div>
+
+</div>
+<!-- End of timer pane --> 
+
+<!-- BEGIN OF site main content content here -->
+<main class="page-main" id="mainpage"> 
+          
+          <!-- Begin of home page -->
+    <div class="section page-home page page-cent" id="s-home">
+    
+        <!-- Content -->
+        <section class="content">
+            <header class="header">
+                <div class="h-left">
+                    <h2>诚邀<strong>见证</strong></h2>
+                    </div>
+                <div class="h-right">
+                      <h3>韩梅梅 & <br> 李小明</h3>
+                      <h4 class="subhead"><a href="#register">婚礼庆典</a></h4>
+                </div>
+            </header>
+        </section>
+
+        <!-- Scroll down button -->
+        <footer class="p-footer p-scrolldown">
+            <a href="#register">
+                <div class="arrow-d">
+                    <div class="before">Scroll</div>
+                    <div class="after">Down</div>
+                    <div class="circle"><i class="ion ion-mouse"></i></div>
+                </div>
+            </a>
+        </footer>
+    </div>
+          <!-- End of home page --> 
+          
+          <!-- Begin of register page -->
+    <div class="section page-register page page-cent"  id="s-register">
+        <section class="content">
+            <header class="p-title">
+                <h3>庆宴时间：<i class="ion ion-compose"></i></h3>
+                <h4 class="subhead">2018年1月15日</h4>
+            </header>
+            <div>
+                <form id="mail-subscription" class="form magic send_email_form" method="get" action="ajaxserver/serverfile.php">
+                    <p class="invite"><br/>
+                        请在下方输入到场宾客姓名我们将提前为您安排坐席：</p>
+                    <div class="fields clearfix" style="margin-top: 10px">
+                        <div class="input">
+                            <label for="reg-email">姓名： </label>
+                            <input id="reg-name" class="email_f"  name="email" type="text" required data-validation-type="text">
+                        </div>
+                    </div>
+                    <div class="fields clearfix" style="margin-top: 10px">
+                        <div class="input">
+                            <label for="reg-email">人数： </label>
+                            <input id="reg-email" class="email_f"  name="email" type="text" required data-validation-type="text">
+                        </div>
+                    </div>
+                    <div class="buttons" style="text-align: center; margin-top: 10px; ">
+                        <button id="submit" class="button email_b" name="submit_email" style="width: 40%">确认</button>
+                    </div>
+                    <p class="email-ok invisible"><strong>等一场千年雨歇，侯一人如约而至！</strong> </p>
+                </form>
+            </div>
+        </section>
+        <footer class="p-footer p-scrolldown">
+            <a href="#about-us">
+                <div class="arrow-d">
+                    <div class="before">About</div>
+                    <div class="after">Lorem</div>
+                    <div class="circle"><i class="ion ion-mouse"></i></div>
+                </div>
+            </a>
+        </footer>
+    </div>
+          <!-- End of register page --> 
+          
+          <!-- Begin of about us page -->
+    <div class="section page-about page page-cent" id="s-about-us">
+        <section class="content">
+
+            <!--<header class="p-title">-->
+                <!--<h3>关于我们 <i class="ion ion-android-information"> </i> </h3>-->
+                <!--<h4 class="subhead">适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</h4>-->
+                <!--<h4 class="subhead">来源：<a href="http://sc.chinaz.com/" target="_blank">站长素材</a></h4>-->
+            <!--</header>-->
+
+            <article class="text">
+                <p>花径不曾缘客扫，蓬门今始为君开。</p>
+                <p>盘飧市远无兼味，樽酒家贫只旧醅。</p>
+            </article>
+        </section>
+        <footer class="p-footer p-scrolldown">
+            <a href="#contact">
+              <div class="arrow-d">
+                    <div class="before">Contact</div>
+                    <div class="after">Message</div>
+                    <div class="circle"><i class="ion ion-mouse"></i></div>
+              </div>
+            </a>
+        </footer>
+    </div>
+          <!-- End of about us page -->
+          
+    <!-- Begin of Contact page   -->
+    <div class="section page-contact page page-cent  bg-color" data-bgcolor="rgba(95, 25, 208, 0.88)s" id="s-contact">
+
+    <!-- Begin of contact information -->
+
+        <div class="slide" id="s-information" data-anchor="information">
+
+            <section class="content">
+                <header class="p-title">
+                    <h3>地址<i class="ion ion-location"> </i> </h3>
+                    <ul class="buttons">
+                        <li class="show-for-medium-up">
+                            <a title="About" href="#about-us" ><i class="ion ion-android-information"></i></a>
+                        </li>
+                        <!--<li>-->
+                            <!--<a title="Contact" href="#contact/information"><i class="ion ion-location"></i></a>-->
+                        <!--</li>-->
+                        <li> <a title="Message" href="#contact/message"><i class="ion ion-email"></i></a>
+                        </li>
+                    </ul>
+                </header>
+        <!-- Begin Of Page SubSction -->
+
+                <div class="contact">
+                    <div class="row">
+                        <div class="medium-6 columns left">
+                            <ul>
+                                <li>
+                                    <h4>宴会地点：</h4>
+                                    <p>某某某国际酒店</p>
+                                </li>
+                                <li>
+                                    <h4>地址：</h4>
+                                    <p>人民东路88888号</p>
+                                </li>
+                                <li>
+                                    <h4>酒店电话</h4>
+                                    <p> 010-123456789</p>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="medium-6 columns social-links right">
+                            <ul>
+                <!-- legal notice -->
+                                <li class="show-for-medium-up">
+                                    <h4>查看地图</h4>
+                                    <p><a href="http://map.baidu.com/?newmap=1&s=inf%26uid%3Da61500c52fa38761f72310b0%26wd%3D%E5%BA%B7%E5%9F%8E%E5%9B%BD%E9%99%85%26all%3D1%26c%3D86&from=alamap&tpl=map_singlepoint" target="_blank">点击查看在线地图</a></p>
+
+                                </li>
+                                <li>
+                                    <p class="small"><strong>期待您的到场！</strong></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        <!-- End of page SubSection -->
+            </section>
+        </div>
+    <!-- end of contact information -->
+
+
+    <!-- begin of contact message -->
+
+        <div class="slide" id="s-message" data-anchor="message">
+            <section class="content">
+                <header class="p-title">
+                    <h3>宾客寄语：<i class="ion ion-email"> </i> </h3>
+                    <ul class="buttons">
+                        <li class="show-for-medium-up">
+                            <a title="About" href="#about-us"><i class="ion ion-android-information"></i></a>
+                        </li>
+                        <li>
+                            <a title="Contact" href="#contact/information"><i class="ion ion-location"></i></a>
+                        </li>
+                        <!--<li>-->
+                            <!--<a title="Message" href="#contact/message"><i class="ion ion-email"></i></a>-->
+                        <!--</li>-->
+                    </ul>
+                </header>
+        <!-- Begin Of Page SubSction -->
+
+                <div class="page-block c-right v-zoomIn">
+                    <div class="wrapper">
+                        <form class="message form send_message_form" method="get" action="ajaxserver/serverfile.php">
+                            <div class="fields clearfix">
+                                <div class="input">
+                                    <label for="mes-name">姓名：</label>
+                                    <input id="mes-name" name="name" type="text" placeholder="您的名字" required>
+                                </div>
+
+                            </div>
+                            <div class="fields clearfix">
+                                <div class="input">
+                                    <label for="mes-email">邮箱：</label>
+                                    <input id="mes-email" type="email" placeholder="邮箱地址" name="email" required>
+                                </div>
+                            </div>
+                            <div class="fields clearfix no-border">
+                                <label for="mes-text">留言：</label>
+                                <textarea id="mes-text" placeholder="您写下的祝福将被送出" name="message" required></textarea>
+                                <div>
+                                    <p class="message-ok invisible">您的祝福已经送出，谢谢！.</p>
+                                </div>
+                            </div>
+                            <div class="buttons" style="text-align: center">
+                                <button id="submit-message" class="button email_b" name="submit_message" style="width: 40%">发送</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<script src="js/jquery.min.js"></script>
+<!-- All vendor scripts --> 
+<script src="js/vendor/all.js"></script> 
+
+<!-- Downcount JS --> 
+<script src="js/jquery.downCount.js"></script> 
+
+<!-- Form script --> 
+<script src="js/form_script.js"></script> 
+
+<!-- Javascript main files --> 
+<script src="js/main.js"></script> 
+<script type="text/javascript" src="js/jquery.jplayer.min.js"></script> 
+<script type="text/javascript">
+ $(document).ready(function(){
+  $("#jquery_jplayer_1").jPlayer({
+   ready: function () {
+    $(this).jPlayer("setMedia", {
+     mp3: "music.mp3",
+	 
+    }).jPlayer("play");
+   },
+   ended: function() { // The $.jPlayer.event.ended event
+    $(this).jPlayer("play"); // Repeat the media
+  },
+   swfPath: "/js",
+   supplied: "mp3"
+  });
+ });
+</script>
+
+<div id="jquery_jplayer_1"></div>
+<div id="jp_container_1">
+    <a href="#" class="jp-play">
+        <li class="ion-music-note" data-pack="default" data-tags="songs"></li>
+    </a>
+    <a href="#" class="jp-pause">
+        <li class="ion-headphone" data-pack="default" data-tags="music, earbuds, beats"></li>
+    </a>
+</div>
+</body>
+</html>
