@@ -42,7 +42,21 @@ class MarrySQLManager: JiaQiManager {
         let count = request.param("count")
         let text = request.param("text")
         let updateDate = String.time()
-        let sql = "update t_marry_people set name = '\(name)', count = '\(count)', text = '\(text)', updateDate = '\(updateDate)' where phone = \(phone)"
+        
+        var sql = "update t_marry_people set "
+        if !name.isNull() {
+            sql += "name = '\(name)', "
+        }
+        
+        if !count.isNull() {
+            sql += "count = '\(count)', "
+        }
+        
+        if !text.isNull() {
+            sql += "text = '\(text)', "
+        }
+        
+        sql += "updateDate = '\(updateDate)' where phone = \(phone)"
         let success = mySql.query(statement: sql);
        
         closeConnect()
