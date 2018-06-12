@@ -408,6 +408,7 @@ function calcuTimeValue(times) {
      var phone = $('#mes-phone').val();
      if (phone.length == 0) {
          $('#post2-msg').text("请输入电话号码");
+         return;
      }
      
      $.ajax({
@@ -435,10 +436,12 @@ function calcuTimeValue(times) {
      var phone = $('#reg-phone').val();
      if (phone.length == 0) {
          $('#post1-msg').text("请输入电话号码");
+         return;
      }
      var count = $('#reg-count').val();
      if (count.length == 0) {
          $('#post1-msg').text("请输入出席人数");
+         return;
      }
      $.ajax({
          url: "/marry",
