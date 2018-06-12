@@ -347,7 +347,6 @@
  $(document).ready(function(){
      $('.subhead-time').text('2019年06月13日');
 
-                   
     $("#jquery_jplayer_1").jPlayer({
         ready: function () {
             $(this).jPlayer("setMedia", {
@@ -365,16 +364,16 @@
      var startDay = new Date(start.replace(/[^\d]/g,'/'));
 
      var offsetTime = (startDay.getTime() - new Date().getTime()) / 1000;   //时间差的毫秒数
-
-     calcuTimeValue(offsetTime);
-     countDown(offsetTime-1);
+     
+     countDown(offsetTime);
 });
 
 
 //带天数的倒计时
 function countDown(times) {
+    calcuTimeValue(times);
     var timer = setInterval(function(){
-        calcuTimeValue(times--);
+        calcuTimeValue(--times);
     },1000);
 
     if(times <= 0){
@@ -405,12 +404,18 @@ function calcuTimeValue(times) {
 
 
  function post2() {
+     
+     var phone = $('#mes-phone').val();
+     if (phone.length == 0) {
+         $('#post2-msg').text("请输入电话号码");
+     }
+     
      $.ajax({
          url: "/marry",
          type: 'POST',
          data: {
              "name": $('#mes-name').val(),
-             "phone": $('#mes-phone').val(),
+             "phone": phone,
              "text": $('#mes-text').val(),
              "type": "msg"
          },
@@ -427,14 +432,21 @@ function calcuTimeValue(times) {
  }
 
  function post1() {
-
+     var phone = $('#reg-phone').val();
+     if (phone.length == 0) {
+         $('#post1-msg').text("请输入电话号码");
+     }
+     var count = $('#reg-count').val();
+     if (count.length == 0) {
+         $('#post1-msg').text("请输入出席人数");
+     }
      $.ajax({
          url: "/marry",
          type: 'POST',
          data: {
              "name": $('#reg-name').val(),
-             "phone": $('#reg-phone').val(),
-             "count": $('#reg-count').val(),
+             "phone": phone,
+             "count": count,
          },
          dataType:'json',
          success: function(response) {

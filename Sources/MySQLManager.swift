@@ -66,6 +66,7 @@ class ChatManager: MySQLManager {
     }
 }
 
+
 class JiaQiManager: MySQLManager {
     func connect() -> Bool {
         
