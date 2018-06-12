@@ -66,6 +66,17 @@ class ChatManager: MySQLManager {
     }
 }
 
+class JiaQiManager: MySQLManager {
+    func connect() -> Bool {
+        
+        let flag = connect(name: "db_jiaqi")
+        defer {
+            closeConnect() //这个延后操作能够保证在程序结束时无论什么结果都会自动关闭数据库连接
+        }
+        return flag
+    }
+}
+
 
 
 

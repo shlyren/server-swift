@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        
     <style>
         body {
             padding: 0;
@@ -22,21 +23,23 @@
     <script>
         function request() {
             var xmlhttp;
+            
             if (window.XMLHttpRequest)
             {
                 //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-                xmlhttp=new XMLHttpRequest();
+                xmlhttp = new XMLHttpRequest();
             }
             else
             {
                 // IE6, IE5 浏览器执行代码
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
             }
             xmlhttp.onreadystatechange=function()
             {
                 document.getElementById("myDiv").innerText=xmlhttp.responseText;
+             
             }
-            xmlhttp.open("GET",document.getElementById("requestURL").value,true);
+            xmlhttp.open("GET", document.getElementById("requestURL").value, true);
             xmlhttp.send();
         }
     </script>

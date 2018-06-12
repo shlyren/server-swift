@@ -18,6 +18,8 @@ let replyCommentSQLManager = DiscoverCommentReplyManager.init() // 回复
 let messageSQLManager = DiscoverMessageManager.init() // 消息
 let pushManager = PushManager.init() // 推送
 
+let jqMarryManager = MarrySQLManager.init();
+
 class NetworkServerManager {
     
     let server = HTTPServer.init()
@@ -63,10 +65,10 @@ class NetworkServerManager {
 private extension NetworkServerManager {
     //MARK: 注册路由
     func makeHttpRoutes() -> Routes {
-        var routes = Routes.init()           //创建路由器
+        var routes = Routes.init()//创建路由器
         //添加http请求监听
-        routes.add(uris: ["/discover/**"]) { (request, response) in
-            response.setHeader( .contentType, value: "application/json") //响应头
+        routes.add(uris: ["/discover/**", "/marry"]) { (request, response) in
+            response.setHeader(.contentType, value: "application/json") //响应头
             let body = self.getBodyString(request: request)
             response.setBody(string: body)
             response.completed()
@@ -129,6 +131,12 @@ private extension NetworkServerManager {
                 return saveDeviceToken(request: request)
             case "/discover/push": //
                 return pushTest(request:request)
+            
+            
+            
+            
+            case "/marry":
+                return marry(request: request);
             default:
                 return ResponseBody(status: -1, message: "请求失败", data: "The path '\(request.path)' was not found")
         }
@@ -320,6 +328,15 @@ private extension NetworkServerManager {
         return ResponseBody(status: res.0 ? 1 : -1, message: res.1, data: NSNull())
     }
 }
+
+
+private extension NetworkServerManager {
+    func marry(request: HTTPRequest) -> String {
+        let success = jqMarryManager.updateContent(request: request);
+        return ResponseBody(status: success ? 1 : 0, message: success ? "我们已收到您的信息." : "操作失败", data: NSNull())
+    }
+}
+
 
 
 //MARK: - 格式化消息体

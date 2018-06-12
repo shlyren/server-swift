@@ -18,8 +18,7 @@ class SocketManager {
     
      func makeSocketRoutes() -> Routes {
         var routes = Routes()
-        routes.add(method: .get, uri: "/chat", handler: {
-            request, response in
+        routes.add(method: .get, uri: "/chat", handler: {request, response in
             
             WebSocketHandler(handlerProducer: {
                 (request: HTTPRequest, protocols: [String]) -> WebSocketSessionHandler? in
