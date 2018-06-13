@@ -3,35 +3,24 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-
-    <!-- Page Title Here -->
-    <title></title>
-
-    <!-- Page Description Here -->
-    <meta name="description" content="A responsive coming soon template, un template HTML pour une page en cours de construction">
-
-    <!-- Disable screen scaling-->
+    <title>邀请函</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-
-    <!-- Initializer -->
     <link rel="stylesheet" href="css/normalize.css">
-
     <!-- Web fonts and Web Icons -->
     <link rel="stylesheet" href="css/pageloader.css">
     <link rel="stylesheet" href="fonts/opensans/stylesheet.css">
     <link rel="stylesheet" href="fonts/asap/stylesheet.css">
     <link rel="stylesheet" href="css/ionicons.min.css">
-
     <!-- Vendor CSS style -->
     <link rel="stylesheet" href="css/foundation.min.css">
     <link rel="stylesheet" href="js/vendor/jquery.fullPage.css">
     <link rel="stylesheet" href="js/vegas/vegas.min.css">
-
     <!-- Main CSS files -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/main_responsive.css">
     <link rel="stylesheet" href="css/style-color1.css">
+        
     <script src="js/vendor/modernizr-2.7.1.min.js"></script>
     <style>
         #jp_container_1 { position: fixed; top: 5%; left: 2% }
@@ -40,10 +29,6 @@
     </style>
 </head>
 <body id="menu" class="alt-bg">
-<!--[if lt IE 8]>
-	<p class="browsehappy">本页面适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
-<![endif]--> 
-
 <!-- Page Loader -->
 <div class="page-loader" id="page-loader">
     <div>
@@ -113,9 +98,9 @@
             <header class="header">
                 <div class="h-left">
                     <h2>诚邀<strong>见证</strong></h2>
-                    </div>
+                </div>
                 <div class="h-right">
-                      <h3>任玉祥  <br> 任佳期</h3>
+                      <h3>任玉祥<br>任佳期</h3>
                       <h4 class="subhead"><a href="#register">婚礼庆典</a></h4>
                 </div>
             </header>
@@ -188,12 +173,6 @@
     <div class="section page-about page page-cent" id="s-about-us">
         <section class="content">
 
-            <!--<header class="p-title">-->
-                <!--<h3>关于我们 <i class="ion ion-android-information"> </i> </h3>-->
-                <!--<h4 class="subhead">适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</h4>-->
-                <!--<h4 class="subhead">来源：<a href="http://sc.chinaz.com/" target="_blank">站长素材</a></h4>-->
-            <!--</header>-->
-
             <article class="text">
                 <p>花径不曾缘客扫，蓬门今始为君开。</p>
                 <p>盘飧市远无兼味，樽酒家贫只旧醅。</p>
@@ -204,7 +183,9 @@
               <div class="arrow-d">
                     <div class="before">Contact</div>
                     <div class="after">Message</div>
-                    <div class="circle"><i class="ion ion-mouse"></i></div>
+                    <div class="circle">
+                        <i class="ion ion-mouse"></i>
+                    </div>
               </div>
             </a>
         </footer>
@@ -225,14 +206,12 @@
                         <li class="show-for-medium-up">
                             <a title="About" href="#about-us" ><i class="ion ion-android-information"></i></a>
                         </li>
-                        <!--<li>-->
-                            <!--<a title="Contact" href="#contact/information"><i class="ion ion-location"></i></a>-->
-                        <!--</li>-->
-                        <li> <a title="Message" href="#contact/message"><i class="ion ion-email"></i></a>
+                        
+                        <li>
+                            <a title="Message" href="#contact/message"><i class="ion ion-email"></i></a>
                         </li>
                     </ul>
                 </header>
-        <!-- Begin Of Page SubSction -->
 
                 <div class="contact">
                     <div class="row">
@@ -288,9 +267,6 @@
                         <li>
                             <a title="Contact" href="#contact/information"><i class="ion ion-location"></i></a>
                         </li>
-                        <!--<li>-->
-                            <!--<a title="Message" href="#contact/message"><i class="ion ion-email"></i></a>-->
-                        <!--</li>-->
                     </ul>
                 </header>
         <!-- Begin Of Page SubSction -->
@@ -335,10 +311,8 @@
 <script src="js/vendor/all.js"></script> 
 
 <!-- Downcount JS --> 
-<script src="js/jquery.downCount.js"></script> 
+<script src="js/jquery.downCount.js"></script>
 
-<!-- Form script --> 
-<script src="js/form_script.js"></script> 
 
 <!-- Javascript main files --> 
 <script src="js/main.js"></script> 
@@ -350,12 +324,12 @@
     $("#jquery_jplayer_1").jPlayer({
         ready: function () {
             $(this).jPlayer("setMedia", {
-                    mp3: "music.mp3",
-                    }).jPlayer("play");
-                },
-                ended: function() { // The $.jPlayer.event.ended event
-                   $(this).jPlayer("play"); // Repeat the media
-            },
+                mp3: "music.mp3",
+            }).jPlayer("play");
+        },
+        ended: function() { // The $.jPlayer.event.ended event
+            $(this).jPlayer("play"); // Repeat the media
+        },
         swfPath: "/js",
         supplied: "mp3"
     });

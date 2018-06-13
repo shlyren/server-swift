@@ -36,7 +36,7 @@ class NetworkServerManager {
         let certPath = "/etc/nginx/sslkey/shlyren.com/full_chain.pem" // 证书路径
         let keyPath = "/etc/nginx/sslkey/shlyren.com/private.key" // 私钥路径
         server.ssl = (certPath,keyPath)
-        server.certVerifyMode = .sslVerifyPeer
+        server.certVerifyMode = .sslVerifyPeerWithFailIfNoPeerCertClientOnce
     #endif
         
         server.addRoutes(makeHttpRoutes())    //路由添加进服务
