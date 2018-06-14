@@ -83,10 +83,16 @@ class NetworkServerManager {
                 "name" : PerfectHTTPServer.HTTPFilter.contentCompression,
             ]
         ]
+        
+    #if os(Linux)
+        let httpPort = 80
+    #else
+        let httpPort = 8080
+    #endif
         var servers = [
             [
-                "name" : "shlyren.com",
-                "port" : 80,
+                "name" : "localhost",
+                "port" : httpPort,
                 "routes" : routes,
                 "filters" : filters
             ]
