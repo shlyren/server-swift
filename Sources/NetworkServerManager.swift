@@ -35,13 +35,13 @@ class NetworkServerManager {
     /// 通过创建实例形式创建http服务器
     func setupServerWithNew() {
         let server = HTTPServer.init()
-        server.documentRoot = "webroot"      //根目录
+        //server.documentRoot = "webroot"      //根目录
        
     #if os(Linux) // 服务器(Ubuntu)端使用ssl协议
 //        server.serverName = "api.ctoa.yuxiang.ren"
 //        let certPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/cert.pem" // 证书
 //        let keyPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/privkey.pem" // 私钥
-        server.serverPort = 443 // 端口
+        server.serverPort = 8081 // 端口
         server.serverName = "shlyren.com"
         let certPath = "/etc/nginx/sslkey/shlyren.com/full_chain.pem" // 证书路径
         let keyPath = "/etc/nginx/sslkey/shlyren.com/private.key" // 私钥路径
@@ -122,7 +122,7 @@ class NetworkServerManager {
                 "verifyMode": "peer",
                 "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
             ]
-            ])
+        ])
     #endif
         do {
             CTLog("启动HTTP服务器")
@@ -208,15 +208,16 @@ private extension NetworkServerManager {
             let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/"
             request.path = path;
 
-            // 设置根目录
-            #if os(Linux)
-                let rootPath = "/root/swift/server-swift/web";
-            #else
-                let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
-            #endif
+        // 设置根目录
+        #if os(Linux)
+            let rootPath = "/root/swift/server-swift/web";
+        #else
+            let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
+        #endif
             
             let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
             handler.handleRequest(request: request, response: response)
+            response.completed()
         }
 
 //        SocketManager().makeSocketRoutes()
