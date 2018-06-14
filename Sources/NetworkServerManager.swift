@@ -57,6 +57,7 @@ class NetworkServerManager {
 //        let serverName = "localhost"
 //    #endif
         
+        // 添加路由
         let routes = [
             [
                 "uri": "/web/**",
@@ -86,18 +87,20 @@ class NetworkServerManager {
         
     #if os(Linux)
         let httpPort = 80
+        let serverName = "shlyren.com"
     #else
         let httpPort = 8080
+        let serverName = "localhost"
     #endif
         var servers = [
             [
-                "name" : "localhost",
+                "name" : serverName,
                 "port" : httpPort,
                 "routes" : routes,
                 "filters" : filters
             ]
         ]
-    #if os(Linux)
+    #if os(Linux) // 服务器添加443端口
         servers.append([
             "name" : "shlyren.com",
             "port" : 443,
@@ -153,6 +156,8 @@ class NetworkServerManager {
     
 }
 
+
+// MARK: - for HTTPServer.launch(configurationData: ["servers": servers])
 private extension NetworkServerManager {
 
     /// 静态web
@@ -191,35 +196,35 @@ private extension NetworkServerManager {
 // MARK: - http
 private extension NetworkServerManager {
     //MARK: 注册路由
-    func makeHttpRoutes() -> Routes {
-        var routes = Routes.init()//创建路由器
-        //添加http请求监听
-        routes.add(uris: ["/discover/**", "/marry"]) { (request, response) in
-            response.setHeader(.contentType, value: "application/json") //响应头
-            let body = self.getBodyString(request: request)
-            response.setBody(string: body)
-            response.completed()
-        }
-       
-        // 添加静态web监听
-        routes.add(uri: "/web/**") { request, response in
-            let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/"
-            request.path = path;
-
-            // 设置根目录
-            #if os(Linux)
-                let rootPath = "/root/swift/server-swift/web";
-            #else
-                let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
-            #endif
-            
-            let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
-            handler.handleRequest(request: request, response: response)
-        }
-
-//        SocketManager().makeSocketRoutes()
-        return routes
-    }
+//    func makeHttpRoutes() -> Routes {
+//        var routes = Routes.init()//创建路由器
+//        //添加http请求监听
+//        routes.add(uris: ["/discover/**", "/marry"]) { (request, response) in
+//            response.setHeader(.contentType, value: "application/json") //响应头
+//            let body = self.getBodyString(request: request)
+//            response.setBody(string: body)
+//            response.completed()
+//        }
+//       
+//        // 添加静态web监听
+//        routes.add(uri: "/web/**") { request, response in
+//            let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/"
+//            request.path = path;
+//
+//            // 设置根目录
+//            #if os(Linux)
+//                let rootPath = "/root/swift/server-swift/web";
+//            #else
+//                let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
+//            #endif
+//            
+//            let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
+//            handler.handleRequest(request: request, response: response)
+//        }
+//
+////        SocketManager().makeSocketRoutes()
+//        return routes
+//    }
     
     /// 获取body
     func getBodyString(request: HTTPRequest) -> String {
