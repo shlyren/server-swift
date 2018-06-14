@@ -44,58 +44,91 @@ class NetworkServerManager {
 //        server.addRoutes(SocketManager().makeSocketRoutes())
 //        server.setResponseFilters([(Filter404(), .high)])
         
-    #if os(Linux) // 服务器(Ubuntu)端使用ssl协议
+//    #if os(Linux) // 服务器(Ubuntu)端使用ssl协议
+//
+//        let tlsConfig = [
+//            "certPath": "/etc/nginx/sslkey/shlyren.com/full_chain.pem",
+//            "verifyMode": "peer",
+//            "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
+//        ]
+//        let serverName = "shlyren.com"
+//    #else
+//        let tlsConfig = NSNull()
+//        let serverName = "localhost"
+//    #endif
         
-        let tlsConfig = [
-            "certPath": "/etc/nginx/sslkey/shlyren.com/full_chain.pem",
-            "verifyMode": "peer",
-            "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
-        ]
-        let serverName = "shlyren.com"
-    #else
-        let tlsConfig = NSNull()
-        let serverName = "localhost"
-    #endif
-        
-        let confData = [
-            "servers": [
-                [
-                    "name": serverName,
-                    "port": 8080,
-                    "routes":[
-                        [
-                            "uri": "/web/**",
-                            "handler": staticWebFiles
-                        ],
-                        [
-                            "uri": "/discover/**",
-                            "handler": HttpRequest
-                        ],
-                        [
-                            "uri": "/marry",
-                            "handler": HttpRequest
-                        ],
-                        [
-                            "uri": "/chat",
-                            "handler": SocketManager().socketRequest
-                        ]
-                        
+        var servers = [
+            [
+                "name": "localhost",
+                "port": 8080,
+                "routes":[
+                    [
+                        "uri": "/web/**",
+                        "handler": staticWebFiles
                     ],
-                    "filters":[
-                        [
-                            "type":"response",
-                            "priority":"high",
-                            "name":PerfectHTTPServer.HTTPFilter.contentCompression,
-                        ]
+                    [
+                        "uri": "/discover/**",
+                        "handler": HttpRequest
                     ],
-                    "tlsConfig" : tlsConfig
+                    [
+                        "uri": "/marry",
+                        "handler": HttpRequest
+                    ],
+                    [
+                        "uri": "/chat",
+                        "handler": SocketManager().socketRequest
+                    ]
+                    
+                ],
+                "filters":[
+                    [
+                        "type":"response",
+                        "priority":"high",
+                        "name":PerfectHTTPServer.HTTPFilter.contentCompression,
+                        ]
+                ],
+                "tlsConfig" : [
+                    "certPath": "/etc/nginx/sslkey/shlyren.com/full_chain.pem",
+                    "verifyMode": "peer",
+                    "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
                 ]
             ]
         ]
-        //HTTPServer.launch(configurationData: confData)
+        #if os(Linux)
+        servers.append([
+            "name": "shlyren.com",
+            "port": 8080,
+            "routes":[
+                [
+                    "uri": "/web/**",
+                    "handler": staticWebFiles
+                ],
+                [
+                    "uri": "/discover/**",
+                    "handler": HttpRequest
+                ],
+                [
+                    "uri": "/marry",
+                    "handler": HttpRequest
+                ],
+                [
+                    "uri": "/chat",
+                    "handler": SocketManager().socketRequest
+                ]
+            ],
+            "filters":[
+                [
+                    "type":"response",
+                    "priority":"high",
+                    "name":PerfectHTTPServer.HTTPFilter.contentCompression,
+                ]
+            ]
+        ])
+       
+        #endif
         do {
             // Launch the servers based on the configuration data.
-            try HTTPServer.launch(configurationData: confData)
+            try HTTPServer.launch(configurationData: ["servers": servers])
         } catch {
 //            fatalError("====") // fatal error launching one of the servers
         }
@@ -146,11 +179,11 @@ private extension NetworkServerManager {
             request.path = path;
             
             // 设置根目录
-            #if os(Linux)
+        #if os(Linux)
             let rootPath = "/root/swift/server-swift/web";
-            #else
+        #else
             let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
-            #endif
+        #endif
             
             let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
             handler.handleRequest(request: request, response: response)
