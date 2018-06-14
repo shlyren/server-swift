@@ -57,75 +57,53 @@ class NetworkServerManager {
 //        let serverName = "localhost"
 //    #endif
         
+        let routes = [
+            [
+                "uri": "/web/**",
+                "handler": staticWebFiles
+            ],
+            [
+                "uri": "/discover/**",
+                "handler": HttpRequest
+            ],
+            [
+                "uri": "/marry",
+                "handler": HttpRequest
+            ],
+            [
+                "uri": "/chat",
+                "handler": SocketManager().socketRequest
+            ]
+            
+        ]
+        let filters = [
+            [
+                "type":"response",
+                "priority":"high",
+                "name":PerfectHTTPServer.HTTPFilter.contentCompression,
+            ]
+        ]
         var servers = [
             [
                 "name": "localhost",
                 "port": 8080,
-                "routes":[
-                    [
-                        "uri": "/web/**",
-                        "handler": staticWebFiles
-                    ],
-                    [
-                        "uri": "/discover/**",
-                        "handler": HttpRequest
-                    ],
-                    [
-                        "uri": "/marry",
-                        "handler": HttpRequest
-                    ],
-                    [
-                        "uri": "/chat",
-                        "handler": SocketManager().socketRequest
-                    ]
-                    
-                ],
-                "filters":[
-                    [
-                        "type":"response",
-                        "priority":"high",
-                        "name":PerfectHTTPServer.HTTPFilter.contentCompression,
-                        ]
-                ],
-                "tlsConfig" : [
-                    "certPath": "/etc/nginx/sslkey/shlyren.com/full_chain.pem",
-                    "verifyMode": "peer",
-                    "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
-                ]
+                "routes": routes,
+                "filters": filters
             ]
         ]
-        #if os(Linux)
+    #if os(Linux)
         servers.append([
             "name": "shlyren.com",
             "port": 8080,
-            "routes":[
-                [
-                    "uri": "/web/**",
-                    "handler": staticWebFiles
-                ],
-                [
-                    "uri": "/discover/**",
-                    "handler": HttpRequest
-                ],
-                [
-                    "uri": "/marry",
-                    "handler": HttpRequest
-                ],
-                [
-                    "uri": "/chat",
-                    "handler": SocketManager().socketRequest
-                ]
-            ],
-            "filters":[
-                [
-                    "type":"response",
-                    "priority":"high",
-                    "name":PerfectHTTPServer.HTTPFilter.contentCompression,
-                ]
+            "routes": routes,
+            "filters": filters,
+            "tlsConfig" : [
+                "certPath": "/etc/nginx/sslkey/shlyren.com/full_chain.pem",
+                "verifyMode": "peer",
+                "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
             ]
         ])
-       
-        #endif
+    #endif
         do {
             // Launch the servers based on the configuration data.
             try HTTPServer.launch(configurationData: ["servers": servers])
