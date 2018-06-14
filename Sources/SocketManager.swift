@@ -98,7 +98,7 @@ private extension EchoHandler {
                 
             }else{
                 
-                chatManager.save(data: string, userId: fromId)
+                chatManager.save(dataString: string, userId: fromId)
                 let user = decoded["user"] as? [String: Any]
                 let title = user?["userName"] as? String
                 let content = decoded["text"] as? String
