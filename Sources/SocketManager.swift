@@ -32,6 +32,20 @@ class SocketManager {
         return routes
     }
 
+    func socketRequest(data: [String:Any]) throws -> RequestHandler {
+        return {
+            request, response in
+            WebSocketHandler(handlerProducer: {
+                (request: HTTPRequest, protocols: [String]) -> WebSocketSessionHandler? in
+                
+                guard protocols.contains("chat") else { return nil }
+                
+                return self.handler
+            }).handleRequest(request: request, response: response)
+            response.completed()
+            
+        }
+    }
 }
 
 

@@ -22,43 +22,153 @@ let jqMarryManager = MarrySQLManager.init();
 
 class NetworkServerManager {
     
-    let server = HTTPServer.init()
+//    let server = HTTPServer.init()
     
     init() {
-        server.documentRoot = "webroot"      //根目录
-        server.serverPort = 8080 // 端口
+//        server.documentRoot = "webroot"      //根目录
+//        server.serverPort = 8080 // 端口
+        
+//    #if os(Linux) // 服务器(Ubuntu)端使用ssl协议
+////        server.serverName = "api.ctoa.yuxiang.ren"
+////        let certPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/cert.pem" // 证书
+////        let keyPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/privkey.pem" // 私钥
+//        server.serverName = "shlyren.com"
+//        let certPath = "/etc/nginx/sslkey/shlyren.com/full_chain.pem" // 证书路径
+//        let keyPath = "/etc/nginx/sslkey/shlyren.com/private.key" // 私钥路径
+//        server.ssl = (certPath, keyPath)
+//        server.certVerifyMode = .sslVerifyPeer
+//    #endif
+        
+//        server.addRoutes(makeHttpRoutes())    //路由添加进服务
+//        // socket
+//        server.addRoutes(SocketManager().makeSocketRoutes())
+//        server.setResponseFilters([(Filter404(), .high)])
         
     #if os(Linux) // 服务器(Ubuntu)端使用ssl协议
-//        server.serverName = "api.ctoa.yuxiang.ren"
-//        let certPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/cert.pem" // 证书
-//        let keyPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/privkey.pem" // 私钥
-        server.serverName = "shlyren.com"
-        let certPath = "/etc/nginx/sslkey/shlyren.com/full_chain.pem" // 证书路径
-        let keyPath = "/etc/nginx/sslkey/shlyren.com/private.key" // 私钥路径
-        server.ssl = (certPath,keyPath)
-        server.certVerifyMode = .sslVerifyNone
+        
+        let tlsConfig = [
+            "certPath": "/etc/nginx/sslkey/shlyren.com/full_chain.pem",
+            "verifyMode": "peer",
+            "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
+        ]
+        let serverName = "shlyren.com"
+    #else
+        let tlsConfig = NSNull()
+        let serverName = "localhost"
     #endif
         
-        server.addRoutes(makeHttpRoutes())    //路由添加进服务
-        // socket
-        let socket = SocketManager()
-        server.addRoutes(socket.makeSocketRoutes())
+        let confData = [
+            "servers": [
+                [
+                    "name": serverName,
+                    "port": 8080,
+                    "routes":[
+                        [
+                            "uri": "/web/**",
+                            "handler": staticWebFiles
+                        ],
+                        [
+                            "uri": "/discover/**",
+                            "handler": HttpRequest
+                        ],
+                        [
+                            "uri": "/marry",
+                            "handler": HttpRequest
+                        ],
+                        [
+                            "uri": "/chat",
+                            "handler": SocketManager().socketRequest
+                        ]
+                        
+                    ],
+                    "filters":[
+                        [
+                            "type":"response",
+                            "priority":"high",
+                            "name":PerfectHTTPServer.HTTPFilter.contentCompression,
+                        ]
+                    ],
+                    "tlsConfig" : tlsConfig
+                ]
+            ]
+        ]
+        //HTTPServer.launch(configurationData: confData)
+        do {
+            // Launch the servers based on the configuration data.
+            try HTTPServer.launch(configurationData: confData)
+        } catch {
+//            fatalError("====") // fatal error launching one of the servers
+        }
     }
     
     
-    //MARK: 开启服务
-    open func startServer() {
-        do {
-            CTLog("启动HTTP服务器")
-            try server.start()
-        } catch PerfectError.networkError(let err, let msg) {
-            CTLog("网络出现错误：\(err) \(msg)")
-        } catch {
-            CTLog("网络未知错误")
+   
+    
+    //MARK: 404过滤
+    struct Filter404: HTTPResponseFilter {
+        func filterBody(response: HTTPResponse, callback: (HTTPResponseFilterResult) -> ()) {
+            callback(.continue)
+        }
+        func filterHeaders(response: HTTPResponse, callback: (HTTPResponseFilterResult) -> ()) {
+            if case .notFound = response.status {
+                response.setBody(string: "404 Not Found")
+                response.setHeader(.contentLength, value: "\(response.bodyBytes.count)")
+                callback(.done)
+            } else {
+                callback(.continue)
+            }
         }
         
     }
     
+    //MARK: 开启服务
+    open func startServer() {
+//        do {
+//            CTLog("启动HTTP服务器")
+//            try server.start()
+//        } catch PerfectError.networkError(let err, let msg) {
+//            CTLog("网络出现错误：\(err) \(msg)")
+//        } catch {
+//            CTLog("网络未知错误")
+//        }
+        
+    }
+    
+}
+
+private extension NetworkServerManager {
+
+    /// 静态web
+    func staticWebFiles(data: [String:Any]) throws -> RequestHandler {
+        return {
+            request, response in
+            let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/"
+            request.path = path;
+            
+            // 设置根目录
+            #if os(Linux)
+            let rootPath = "/root/swift/server-swift/web";
+            #else
+            let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
+            #endif
+            
+            let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
+            handler.handleRequest(request: request, response: response)
+            response.completed();
+            
+        }
+    }
+    /// http api
+    func HttpRequest(data: [String:Any]) throws -> RequestHandler {
+        return {
+            request, response in
+            response.setHeader(.contentType, value: "application/json") //响应头
+            let body = self.getBodyString(request: request)
+            response.setBody(string: body)
+            response.completed()
+            
+        }
+    }
 }
 
 // MARK: - http
@@ -90,6 +200,7 @@ private extension NetworkServerManager {
             handler.handleRequest(request: request, response: response)
         }
 
+//        SocketManager().makeSocketRoutes()
         return routes
     }
     
