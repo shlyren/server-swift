@@ -99,16 +99,14 @@ class NetworkServerManager {
         ]
         
     #if os(Linux)
-        let httpPort = 80
         let serverName = "shlyren.com"
     #else
-        let httpPort = 8080
         let serverName = "localhost"
     #endif
         var servers = [
             [
                 "name" : serverName,
-                "port" : httpPort,
+                "port" : 8080, // 由于服务器上80端口被nginx占用, 所以使用8080, 这个可自行修改
                 "routes" : routes,
                 "filters" : filters
             ]
@@ -116,7 +114,7 @@ class NetworkServerManager {
     #if os(Linux) // 服务器添加443端口
         servers.append([
             "name" : "shlyren.com",
-            "port" : 443,
+            "port" : 8081, // 由于服务器上443端口被nginx占用, 所以使用8081, 这个可自行修改
             "routes" : routes,
             "filters" : filters,
             "tlsConfig" : [
