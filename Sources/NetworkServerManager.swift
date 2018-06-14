@@ -78,25 +78,25 @@ class NetworkServerManager {
         ]
         let filters = [
             [
-                "type":"response",
-                "priority":"high",
-                "name":PerfectHTTPServer.HTTPFilter.contentCompression,
+                "type" : "response",
+                "priority" : "high",
+                "name" : PerfectHTTPServer.HTTPFilter.contentCompression,
             ]
         ]
         var servers = [
             [
-                "name": "shlyren.com",
-                "port": 8080,
-                "routes": routes,
-                "filters": filters
+                "name" : "shlyren.com",
+                "port" : 80,
+                "routes" : routes,
+                "filters" : filters
             ]
         ]
     #if os(Linux)
         servers.append([
-            "name": "shlyren.com",
-            "port": 8081,
-            "routes": routes,
-            "filters": filters,
+            "name" : "shlyren.com",
+            "port" : 443,
+            "routes" : routes,
+            "filters" : filters,
             "tlsConfig" : [
                 "certPath": "/etc/nginx/sslkey/shlyren.com/full_chain.pem",
                 "verifyMode": "peer",
