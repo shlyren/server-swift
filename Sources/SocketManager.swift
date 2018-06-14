@@ -16,38 +16,33 @@ class SocketManager {
     
     private let handler = EchoHandler.init();
     
-     func makeSocketRoutes() -> Routes {
+    
+    func makeSocketRoutes() -> Routes {
         var routes = Routes()
         routes.add(method: .get, uri: "/chat", handler: {request, response in
-            
-            WebSocketHandler(handlerProducer: {
-                (request: HTTPRequest, protocols: [String]) -> WebSocketSessionHandler? in
-                
-                guard protocols.contains("chat") else { return nil }
-                
-                return self.handler
-            }).handleRequest(request: request, response: response)
+            self.requestHandler(request: request, response: response)
         })
-        
         return routes
     }
 
     func socketRequest(data: [String:Any]) throws -> RequestHandler {
-        return {
-            request, response in
-            WebSocketHandler(handlerProducer: {
-                (request: HTTPRequest, protocols: [String]) -> WebSocketSessionHandler? in
-                guard protocols.contains("chat") else { return nil }
-                return self.handler
-            }).handleRequest(request: request, response: response)
-            response.completed()
-            
+        return { request, response in
+            self.requestHandler(request: request, response: response)
         }
+    }
+    
+    private func requestHandler(request: HTTPRequest, response: HTTPResponse) {
+        WebSocketHandler(handlerProducer: {
+            (request: HTTPRequest, protocols: [String]) -> WebSocketSessionHandler? in
+            guard protocols.contains("chat") else { return nil }
+            return self.handler
+        }).handleRequest(request: request, response: response)
+        //response.completed() // 这里不注释掉, 每次连接后会秒断
     }
 }
 
 
-class EchoHandler: WebSocketSessionHandler {
+private class EchoHandler: WebSocketSessionHandler {
     
     let socketProtocol: String? = "chat"
     var sockets = [String: WebSocket]() //保存所有的连接者

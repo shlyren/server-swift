@@ -22,41 +22,54 @@ let jqMarryManager = MarrySQLManager.init();
 
 class NetworkServerManager {
     
-//    let server = HTTPServer.init()
     
-    init() {
-//        server.documentRoot = "webroot"      //根目录
-//        server.serverPort = 8080 // 端口
+    //MARK: 开启服务
+    open func startServer() {
         
-//    #if os(Linux) // 服务器(Ubuntu)端使用ssl协议
-////        server.serverName = "api.ctoa.yuxiang.ren"
-////        let certPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/cert.pem" // 证书
-////        let keyPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/privkey.pem" // 私钥
-//        server.serverName = "shlyren.com"
-//        let certPath = "/etc/nginx/sslkey/shlyren.com/full_chain.pem" // 证书路径
-//        let keyPath = "/etc/nginx/sslkey/shlyren.com/private.key" // 私钥路径
-//        server.ssl = (certPath, keyPath)
-//        server.certVerifyMode = .sslVerifyPeer
-//    #endif
+        setupServerWithLunch()
+    //  setupServerWithNew()
+    
+    }
+    
+    
+    /// 通过创建实例形式创建http服务器
+    func setupServerWithNew() {
+        let server = HTTPServer.init()
+        server.documentRoot = "webroot"      //根目录
+       
+    #if os(Linux) // 服务器(Ubuntu)端使用ssl协议
+//        server.serverName = "api.ctoa.yuxiang.ren"
+//        let certPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/cert.pem" // 证书
+//        let keyPath = "/etc/letsencrypt/live/api.ctoa.yuxiang.ren/privkey.pem" // 私钥
+        server.serverPort = 443 // 端口
+        server.serverName = "shlyren.com"
+        let certPath = "/etc/nginx/sslkey/shlyren.com/full_chain.pem" // 证书路径
+        let keyPath = "/etc/nginx/sslkey/shlyren.com/private.key" // 私钥路径
+        server.ssl = (certPath, keyPath)
+        server.certVerifyMode = .sslVerifyPeer
+    #else
+        server.serverPort = 8080
+    #endif
         
-//        server.addRoutes(makeHttpRoutes())    //路由添加进服务
-//        // socket
-//        server.addRoutes(SocketManager().makeSocketRoutes())
-//        server.setResponseFilters([(Filter404(), .high)])
+        //路由添加进服务
+        server.addRoutes(makeHttpRoutes())
+        // socket
+        server.addRoutes(SocketManager().makeSocketRoutes())
+        //server.setResponseFilters([(Filter404(), .high)])
         
-//    #if os(Linux) // 服务器(Ubuntu)端使用ssl协议
-//
-//        let tlsConfig = [
-//            "certPath": "/etc/nginx/sslkey/shlyren.com/full_chain.pem",
-//            "verifyMode": "peer",
-//            "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
-//        ]
-//        let serverName = "shlyren.com"
-//    #else
-//        let tlsConfig = NSNull()
-//        let serverName = "localhost"
-//    #endif
-        
+        do {
+            CTLog("启动HTTP服务器")
+            try server.start()
+        } catch PerfectError.networkError(let err, let msg) {
+            CTLog("网络出现错误：\(err) \(msg)")
+        } catch {
+            CTLog("网络未知错误")
+        }
+    }
+    
+    /// 通过静态方法形式创建http服务器
+    /// Launch the servers based on the configuration data.
+    func setupServerWithLunch() {
         // 添加路由
         let routes = [
             [
@@ -82,7 +95,7 @@ class NetworkServerManager {
                 "type" : "response",
                 "priority" : "high",
                 "name" : PerfectHTTPServer.HTTPFilter.contentCompression,
-            ]
+                ]
         ]
         
     #if os(Linux)
@@ -111,16 +124,15 @@ class NetworkServerManager {
                 "verifyMode": "peer",
                 "keyPath": "/etc/nginx/sslkey/shlyren.com/private.key"
             ]
-        ])
+            ])
     #endif
         do {
-            // Launch the servers based on the configuration data.
+            CTLog("启动HTTP服务器")
             try HTTPServer.launch(configurationData: ["servers": servers])
         } catch {
-//            fatalError("====") // fatal error launching one of the servers
+           CTLog("fatal error launching one of the servers")
         }
     }
-    
     
    
     
@@ -138,19 +150,6 @@ class NetworkServerManager {
                 callback(.continue)
             }
         }
-        
-    }
-    
-    //MARK: 开启服务
-    open func startServer() {
-//        do {
-//            CTLog("启动HTTP服务器")
-//            try server.start()
-//        } catch PerfectError.networkError(let err, let msg) {
-//            CTLog("网络出现错误：\(err) \(msg)")
-//        } catch {
-//            CTLog("网络未知错误")
-//        }
         
     }
     
@@ -196,35 +195,35 @@ private extension NetworkServerManager {
 // MARK: - http
 private extension NetworkServerManager {
     //MARK: 注册路由
-//    func makeHttpRoutes() -> Routes {
-//        var routes = Routes.init()//创建路由器
-//        //添加http请求监听
-//        routes.add(uris: ["/discover/**", "/marry"]) { (request, response) in
-//            response.setHeader(.contentType, value: "application/json") //响应头
-//            let body = self.getBodyString(request: request)
-//            response.setBody(string: body)
-//            response.completed()
-//        }
-//       
-//        // 添加静态web监听
-//        routes.add(uri: "/web/**") { request, response in
-//            let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/"
-//            request.path = path;
-//
-//            // 设置根目录
-//            #if os(Linux)
-//                let rootPath = "/root/swift/server-swift/web";
-//            #else
-//                let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
-//            #endif
-//            
-//            let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
-//            handler.handleRequest(request: request, response: response)
-//        }
-//
-////        SocketManager().makeSocketRoutes()
-//        return routes
-//    }
+    func makeHttpRoutes() -> Routes {
+        var routes = Routes.init()//创建路由器
+        //添加http请求监听
+        routes.add(uris: ["/discover/**", "/marry"]) { (request, response) in
+            response.setHeader(.contentType, value: "application/json") //响应头
+            let body = self.getBodyString(request: request)
+            response.setBody(string: body)
+            response.completed()
+        }
+       
+        // 添加静态web监听
+        routes.add(uri: "/web/**") { request, response in
+            let path =  request.urlVariables[routeTrailingWildcardKey] ?? "/"
+            request.path = path;
+
+            // 设置根目录
+            #if os(Linux)
+                let rootPath = "/root/swift/server-swift/web";
+            #else
+                let rootPath = "/Users/yuxiang/Desktop/Fline/OA/CTServer/web";
+            #endif
+            
+            let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
+            handler.handleRequest(request: request, response: response)
+        }
+
+//        SocketManager().makeSocketRoutes()
+        return routes
+    }
     
     /// 获取body
     func getBodyString(request: HTTPRequest) -> String {
