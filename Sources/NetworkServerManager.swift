@@ -85,7 +85,7 @@ class NetworkServerManager {
         ]
         var servers = [
             [
-                "name": "localhost",
+                "name": "shlyren.com",
                 "port": 8080,
                 "routes": routes,
                 "filters": filters
@@ -94,7 +94,7 @@ class NetworkServerManager {
     #if os(Linux)
         servers.append([
             "name": "shlyren.com",
-            "port": 8080,
+            "port": 8081,
             "routes": routes,
             "filters": filters,
             "tlsConfig" : [
