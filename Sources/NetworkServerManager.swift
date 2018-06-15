@@ -265,7 +265,6 @@ private extension NetworkServerManager {
             
             
             
-            
             case "/marry":
                 return marry(request: request);
             default:
