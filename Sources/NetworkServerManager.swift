@@ -217,7 +217,7 @@ private extension NetworkServerManager {
             
             let handler = StaticFileHandler(documentRoot: rootPath, allowResponseFilters: true)
             handler.handleRequest(request: request, response: response)
-            response.completed()
+//            response.completed()
         }
 
 //        SocketManager().makeSocketRoutes()
