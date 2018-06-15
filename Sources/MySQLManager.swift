@@ -10,7 +10,6 @@ import Foundation
 import PerfectLib
 import PerfectMySQL
 
-
 class MySQLManager {
     
     fileprivate let host = "106.14.9.43"
@@ -19,6 +18,11 @@ class MySQLManager {
     
     let mySql = MySQL()
 
+    
+    /// 连接数据库
+    ///
+    /// - Parameter name: 数据库名
+    /// - Returns: 是否成功
     func connect(name: String) -> Bool {
         
         if mySql.connect(host: host, user: user, password: pwd) == false {
@@ -36,13 +40,20 @@ class MySQLManager {
         return true
     }
     
+    
+    /// 关闭连接
     func closeConnect() {
-//        mySql.close()
+        //mySql.close()
+        
     }
 }
 
 class DiscoverManager: MySQLManager {
 
+    
+    /// 连接discover数据库
+    ///
+    /// - Returns: 是否成功
     func connect() -> Bool {
         
         let flag = connect(name: "ct_discover")
@@ -56,6 +67,10 @@ class DiscoverManager: MySQLManager {
 
 
 class ChatManager: MySQLManager {
+    
+    /// 连接聊天数据库
+    ///
+    /// - Returns: 是否成功
     func connect() -> Bool {
         
         let flag = connect(name: "ct_chat")
@@ -68,6 +83,10 @@ class ChatManager: MySQLManager {
 
 
 class JiaQiManager: MySQLManager {
+    
+    /// 连接自用数据库, 用于测试等环境
+    ///
+    /// - Returns: 是否成功
     func connect() -> Bool {
         
         let flag = connect(name: "db_jiaqi")

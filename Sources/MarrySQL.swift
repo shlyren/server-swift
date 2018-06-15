@@ -25,7 +25,6 @@ class MarrySQLManager: JiaQiManager {
     }
     
     
-    
     func updateContent(request: HTTPRequest) -> Bool {
         let phone = request.param("phone");
         if phone.isNull() {

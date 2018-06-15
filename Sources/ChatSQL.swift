@@ -31,8 +31,8 @@ class ChatSQL: ChatManager {
     /// 保存数据
     ///
     /// - Parameters:
-    ///   - data: 数据
-    ///   - userId: userID
+    ///   - dataString: 聊天数据数据
+    ///   - userId: 用户id
     func save(dataString: String, userId: String) {
         
         if userId.isNull() || dataString.isNull() { return }
@@ -48,8 +48,8 @@ class ChatSQL: ChatManager {
     
     /// 获取数据
     ///
-    /// - Parameter userId: uderId
-    /// - Returns: 数据
+    /// - Parameter userId: 用户id
+    /// - Returns: 聊天数据
     func getData(userId: String!) -> [Any] {
         
         if userId.isNull() { return [] }
@@ -78,7 +78,7 @@ class ChatSQL: ChatManager {
     
     /// 清空数据库
     ///
-    /// - Parameter userId: userId
+    /// - Parameter userId: 用户id
     func clearData(userId: String) {
         if userId.isNull() { return }
         guard connect() else { return }

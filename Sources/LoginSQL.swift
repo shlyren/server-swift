@@ -36,7 +36,11 @@ class DiscoverLoginManager: DiscoverManager {
         closeConnect()
     }
     
-    /// 保存koken
+    
+    /// 保存用户登录koken
+    ///
+    /// - Parameter userId: 用户id
+    /// - Returns: token
     func saveToken(userId: String) -> String? {
         
         if userId.isNull() { return nil }
@@ -61,7 +65,11 @@ class DiscoverLoginManager: DiscoverManager {
         return token
     }
     
-    /// 保存push token
+    
+    /// 保存 iOS push token
+    ///
+    /// - Parameter request: http请求体,
+    /// - Returns: 是否成功
     func saveDeviceToken(request: HTTPRequest) -> Bool {
         
         let userId = request.param("userId")
@@ -89,12 +97,19 @@ class DiscoverLoginManager: DiscoverManager {
         closeConnect()
     }
     
-    // 获取 push token
+    
+    /// 获取 push token
+    ///
+    /// - Parameter userId: 用户id
+    /// - Returns: token
     func getDeviceToken(userId:String!) -> String? {
         return getValue(type: .UserId, name: userId)?[2]
     }
     
+    
     /// 删除推送token
+    ///
+    /// - Parameter userId: 用户id
     func removeDeviceToken(userId: String) {
 
         guard userId.isNull() || connect() else { return }
@@ -103,21 +118,37 @@ class DiscoverLoginManager: DiscoverManager {
         closeConnect()
     }
     
-    /// 删除用户token
+    
+    /// 通过token删除用户token
+    ///
+    /// - Parameter token: token
+    /// - Returns: 是否成功
     func deleteToken(token: String!) -> Bool {
         return deleteToken(type: .Token, name: token)
     }
-    /// 删除用户token
+    
+    /// 通过用户id删除用户token
+    ///
+    /// - Parameter userId: 用户id
+    /// - Returns: 是否成功
     func deleteToken(userId: String!) -> Bool {
         return deleteToken(type: .UserId, name: userId)
     }
     
     
-    /// 获取userId
+    
+    /// 通过token获取用户ID
+    ///
+    /// - Parameter token: 用户登录token
+    /// - Returns: 用户id
     func getUserId(token: String!) -> String? {
         return getValue(type: .Token, name: token)?[0]
     }
-    /// 获取token
+    
+    /// 通过用户idh获取token
+    ///
+    /// - Parameter userId: 用户id
+    /// - Returns: token
     func getToken(userId: String!) -> String? {
         return getValue(type: .UserId, name: userId)?[1]
     }

@@ -11,13 +11,13 @@ import PerfectNet
 
 /// 推送模型
 struct PushMode {
-    var token : String! // 设配token
-    var title : String? // 推送标题
-    var message : String? // 推送内容
-    var badge : Int? // app 角标
-    var sound : String? // 声音
-    var type : Int? // 类型
-    var data : Any? // 扩展数据
+    var token: String! // 设配token
+    var title: String? // 推送标题
+    var message: String? // 推送内容
+    var badge: Int? // app 角标
+    var sound: String? // 声音
+    var type: Int? // 类型
+    var data: Any? // 扩展数据
 }
 
 struct PushManager {
@@ -26,11 +26,11 @@ struct PushManager {
     
     init() {
         
-        #if os(Linux)
-           let cert = "/var/CTPushCert/apns-dev.pem" // 服务器(Ubuntu)推送证书路径
-        #else
-           let cert = "/Users/yuxiang/Desktop/Fline/OA/iOS/证书/apns-dev.pem"// 本地推送证书路径
-        #endif
+    #if os(Linux)
+       let cert = "/var/CTPushCert/apns-dev.pem" // 服务器(Ubuntu)推送证书路径
+    #else
+       let cert = "/Users/yuxiang/Desktop/Fline/OA/iOS/证书/apns-dev.pem"// 本地推送证书路径
+    #endif
         
         NotificationPusher.addConfigurationIOS(name: confName, certificatePath: cert)
         NotificationPusher.development = true

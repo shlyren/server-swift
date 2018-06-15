@@ -29,7 +29,7 @@ class DiscoverPostManager : DiscoverManager {
     
     
     /// 插入
-    func insert(request:HTTPRequest) -> Bool {
+    func insert(request: HTTPRequest) -> Bool {
         
         let userId = request.param("userId")
         if userId.isNull() { return false }

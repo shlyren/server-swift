@@ -26,7 +26,11 @@ class DiscoverCommentManager: DiscoverManager {
         closeConnect()
     }
     
-    /// 插入评论
+    
+    /// 插入一条评论
+    ///
+    /// - Parameter request: 请求体
+    /// - Returns: resut
     func insertComment(request: HTTPRequest) -> (success: Bool, msg: String?) {
         
         let topicId = request.param("topicId")
@@ -56,7 +60,7 @@ class DiscoverCommentManager: DiscoverManager {
         guard connect() else {
             return (false, "操作失败")
         }
-        //topicId TEXT, text TEXT, fromId TEXT, fromName TEXT, toId TEXT, toName TEXT, type INT, time TEXT
+        
         let sql = "INSERT INTO t_topic_comment (topicId, text, fromId, fromName, toId, toName, type, time) VALUES (\(topicId), '\(text)', '\(fromId)', '\(fromName)', '\(toId)', '\(toName)', '\(type)', '\(time)')"
         
         let success = mySql.query(statement: sql)
@@ -87,7 +91,11 @@ class DiscoverCommentManager: DiscoverManager {
     }
     
     
-    /// 获取评论
+    
+    /// 获取话题所有评论
+    ///
+    /// - Parameter topicId: 话题id
+    /// - Returns: 所有评论
     func getTopicComment(topicId: String?) -> [[String: Any]] {
         
         if topicId == nil { return [] }
@@ -116,6 +124,11 @@ class DiscoverCommentManager: DiscoverManager {
         return result
     }
     
+    
+    /// 获取t某个评论详情
+    ///
+    /// - Parameter commendId: 评论id
+    /// - Returns: result
     func getCommentDetail(commendId: String) -> [String: Any]? {
         
         if commendId.isNull() { return nil }
@@ -139,6 +152,11 @@ class DiscoverCommentManager: DiscoverManager {
         
     }
     
+    
+    /// 判断话题是否有评论
+    ///
+    /// - Parameter tpoicId: 话题id
+    /// - Returns: 是否有评论
     func checkup(tpoicId: String!) -> Bool {
         
         if tpoicId.isNull() { return false }
@@ -159,7 +177,14 @@ class DiscoverCommentManager: DiscoverManager {
     
 }
 
+
+// MARK: - 内部方法
 private extension DiscoverCommentManager {
+    
+    /// 将sql数据转换为dictionary数据
+    ///
+    /// - Parameter element: sqls数据
+    /// - Returns: dictionary
     func getCommentDict(element: [String?]) -> [String: Any] {
         var dict = [String: Any]()
         
@@ -184,6 +209,7 @@ private extension DiscoverCommentManager {
 }
 
 
+
 /// 评论回复
 class DiscoverCommentReplyManager: DiscoverManager {
     override init() {
@@ -202,7 +228,11 @@ class DiscoverCommentReplyManager: DiscoverManager {
         closeConnect()
     }
     
+    
     /// 获取楼中楼评论
+    ///
+    /// - Parameter request: http请求体
+    /// - Returns: result
     func getCommentReply(request: HTTPRequest) -> (Bool,Any?) {
         let topicId = request.param("topicId")
         if topicId.isNull() {
@@ -228,7 +258,6 @@ class DiscoverCommentReplyManager: DiscoverManager {
         
         results.forEachRow { (elemt) in
             var dict = [String: Any]()
-            //id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, topicId TEXT,commnetId TEXT, text TEXT, fromId TEXT, fromName TEXT, toId TEXT, toName TEXT, time TEXT
             
             dict.updateValue(elemt[0] ?? "", forKey: "id")
             dict.updateValue(elemt[1] ?? "", forKey: "topicId")
@@ -260,6 +289,12 @@ class DiscoverCommentReplyManager: DiscoverManager {
     }
     
     
+    /// 获取评论的回复数
+    ///
+    /// - Parameters:
+    ///   - topicId: 话题id
+    ///   - commentId: 评论id
+    /// - Returns: result
     func getReplyCount(topicId:String, commentId:String) -> Int {
         
         if topicId.isNull() || commentId.isNull() { return 0 }
@@ -271,7 +306,11 @@ class DiscoverCommentReplyManager: DiscoverManager {
         return results.numRows()
     }
     
-    /// 插入
+    
+    /// 插入一条回复
+    ///
+    /// - Parameter request: http请求体
+    /// - Returns: result
     func insertCommnetReply(request : HTTPRequest) -> (Bool,String) {
         let topicId = request.param("topicId")
         if topicId.isNull() {

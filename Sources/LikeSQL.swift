@@ -27,7 +27,11 @@ class DiscoverTopicLikeManager: DiscoverManager {
     }
     
     
-    /// 获取赞
+    
+    /// 获取j话题所有的赞
+    ///
+    /// - Parameter topicId: 话题id
+    /// - Returns: result
     func getTopicLike(topicId:String?) -> [[String: Any]] {
         
         if topicId == nil || topicId!.isNull() || !connect() {
@@ -64,7 +68,11 @@ class DiscoverTopicLikeManager: DiscoverManager {
     }
     
     
-    /// 更新
+    
+    /// 更新话题的赞
+    ///
+    /// - Parameter request: http请求体
+    /// - Returns: result
     func updataLike(request:HTTPRequest) -> (status:Int, like: Any, msg:String) {
         
         let topicId = request.param("topicId")
@@ -89,7 +97,6 @@ class DiscoverTopicLikeManager: DiscoverManager {
             closeConnect()
             return (-1, NSNull(), "操作失败")
         }
-        
         
         guard let results = mySql.storeResults() else {
             closeConnect()

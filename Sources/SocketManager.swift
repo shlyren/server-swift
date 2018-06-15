@@ -96,7 +96,7 @@ private extension EchoHandler {
                     self.handleSession(request: request, socket: socket)
                 })
                 
-            }else{
+            }else {
                 
                 chatManager.save(dataString: string, userId: fromId)
                 let user = decoded["user"] as? [String: Any]

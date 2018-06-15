@@ -26,6 +26,8 @@ class DiscoverMessageManager : DiscoverManager {
         closeConnect()
     }
     
+    
+    /// 插入一条消息(消息中心)
     func insert(userId: String,
                 topicId: String,
                 commentId: String,
